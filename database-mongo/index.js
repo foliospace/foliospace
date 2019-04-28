@@ -1,5 +1,13 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://localhost/foliospace';
+
+mongoose.connect(uristring, function(err, res) {
+  if (err) {
+    console.log('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+    console.log('Success connecting to: ' + uristring);
+  }
+});
 
 var db = mongoose.connection;
 
