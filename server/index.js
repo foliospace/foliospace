@@ -7,8 +7,9 @@ var app = express();
 
 const { Pool } = require('pg');
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+	// Need DB URL	
+	connectionString: process.env.DATABASE_URL,
+	ssl: true
 });
 
 // UNCOMMENT FOR REACT
@@ -19,13 +20,13 @@ const pool = new Pool({
 // app.use(express.static(__dirname + '/../node_modules'));
 
 app.get('/items', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
+	items.selectAll(function(err, data) {
+		if(err) {
+			res.sendStatus(500);
+		} else {
+			res.json(data);
+		}
+	});
 });
 
 // SOURCE: https://devcenter.heroku.com/articles/getting-started-with-nodejs#provision-a-database
