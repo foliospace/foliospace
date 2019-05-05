@@ -2,8 +2,13 @@
 
 # dependencies
 /node_modules
+server/node_modules
 /.pnp
 .pnp.js
+
+# config files
+/server/lib/oktaClient.js
+/client/src/app.config.js
 
 # testing
 /coverage
