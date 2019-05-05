@@ -33,7 +33,7 @@ app.use('/portfolio', require('./routes/portfolio.js'));
 app.use('/projects', require('./routes/projects.js'));
 app.use('/account', require('./routes/account.js'));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
 });
