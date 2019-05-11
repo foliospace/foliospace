@@ -2,6 +2,7 @@
   "name": "Foliospace",
   "version": "1.0.0",
   "description": "Portfolio Maker Web Application",
+
   "repository": {
     "type": "git",
     "url": "https://github.com/foliospace/foliospace"
@@ -11,7 +12,7 @@
     "client": "cd client && yarn start",
     "server": "nodemon server/index.js && node server/bin/www",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node server/index.js",
+    "start": "node server/bin/www",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "Arthur Liou, Andrea Dias, Sharaya Baker",
