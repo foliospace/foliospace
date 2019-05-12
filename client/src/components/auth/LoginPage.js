@@ -1,37 +1,70 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
-import LoginForm from './LoginForm';
-import {withAuth} from '@okta/okta-react';
+import React from 'react';
+import OktaSignIn from '@okta/okta-signin-widget';
+import config from '../../app.config';
 
-export default withAuth(class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authenticated: null
-    };
-    this.checkAuthentication = this.checkAuthentication.bind(this);
-    this.checkAuthentication();
+export default class LoginPage extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+          user: null
+        };
+        this.widget = new OktaSignIn({
+          baseUrl: config.url,
+          clientId: config.client_id,
+          redirectUri: 'http://localhost:3000/implicit/callback'
+        });
+
+    this.showLogin = this.showLogin.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({
-        authenticated
-      });
-    }
+  componentDidMount(){
+    console.log('componentDidMount...');
+    this.widget.session.get((response) => {
+      if(response.status !== 'INACTIVE'){
+        this.setState({user:response.login});
+      }else{
+        this.showLogin();
+      }
+    });
   }
 
-  componentDidUpdate() {
-    this.checkAuthentication();
+  showLogin(){
+    console.log('showLogin...')
+    // Backbone.history.stop();
+    this.widget.renderEl({el:this.loginContainer}, 
+      (response) => {        
+        this.setState({user: response.claims.email});
+        this.widget.remove();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  render() {
-    if (this.state.authenticated === null) return null;
-    return this.state.authenticated ?
-
-    <Redirect to = {{pathname: '/profile'}}/> : 
-    <LoginForm baseUrl = {this.props.baseUrl}/>;
-    
+  logout(){
+    console.log('logout...');
+    this.widget.signOut(() => {
+      this.setState({user: null});
+      this.showLogin();
+    });
   }
-});
+
+  render(){
+    console.log('rendering...');
+    return(
+      <div>
+        {this.state.user ? (
+          <div className="container">
+            <div>Welcome, {this.state.user}!</div>
+            <button onClick={this.logout}>Logout</button>
+          </div>
+        ) : null}
+        {this.state.user ? null : (
+          <div ref={(div) => {this.loginContainer = div; }} />
+        )}
+      </div>
+    );
+  }
+}
