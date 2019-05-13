@@ -33,11 +33,11 @@ Foliospace is a portfolio website maker app that gives user the ability build th
 - npm install in the main folder, client folder and server folder
 - Update Any API keys in 'config.example.js', and then change the file name to 'config.js'
 
-#### Database
-- MySQL
-
 #### Run the App
 - npm start
+
+#### Database
+- MySQL
 
 ### Tech Stack
 #### Front-end
