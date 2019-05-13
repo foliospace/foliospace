@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@okta/okta-sdk-nodejs": "^2.0.0",
+    "@okta/okta-signin-widget": "^2.19.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
