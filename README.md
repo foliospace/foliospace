@@ -30,7 +30,7 @@ Foliospace is a portfolio website maker app that gives user the ability build th
 #### Web App
 - Fork the repo
 - Clone from your fork
-- npm install
+- npm install in the main folder, client folder and server folder
 - Update Any API keys in 'config.example.js', and then change the file name to 'config.js'
 
 #### Database
