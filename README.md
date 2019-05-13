@@ -18,8 +18,8 @@ Foliospace is a portfolio website maker app that gives user the ability build th
 ## Local Development
 - Fork the repo (optional)
 - Clone from your fork
-- npm install in the main folder and client folder
-- yarn install in the main folder
+- 'npm install' in the main folder and client folder
+- 'yarn install' in the main folder
 - Update Any API keys in './client/src/app.config.example.js'. Gitignore is setup to ignore this file so security is maintained with keys not being pushed to Github.
 - Update the Okta keys in './server/lib/OktaClient.js'. Gitignore is setup to ignore this file so security is maintained with keys not being pushed to Github.
 - Run 'yarn start' to start the application.
