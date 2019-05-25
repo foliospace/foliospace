@@ -5,4 +5,11 @@ const client = new okta.Client({
   token: '008A421hKQLXiXMkm2Uy81DE8LdMJe1W3-fGFcHzgi'
 });
 
+const config = {
+  url: 'https://dev-613949.okta.com',
+  issuer: 'https://dev-613949.okta.com/oauth2/default',
+  client_id: '0oajlmbbzksJN8t1Z356'
+};
+
 module.exports = client;
+module.exports.config = config;
