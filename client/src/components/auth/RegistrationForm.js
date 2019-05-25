@@ -119,7 +119,7 @@ export default withAuth(
               onChange={this.handlePasswordChange}
             />
           </div>
-          <input type="submit" id="submit" value="Register" />
+          <input type="submit" id="submit" value="Register"/>
         </form>
       );
     }

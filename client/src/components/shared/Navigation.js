@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { withAuth } from '@okta/okta-react';
+import { Navbar, NavItem } from 'react-bootstrap';
 
 export default withAuth(class Navigation extends React.Component {
   constructor(props) {
@@ -45,12 +45,27 @@ export default withAuth(class Navigation extends React.Component {
       <button onClick={this.login}>Login</button>;
 
     return (
-      <nav>
-        <Link to='/'>Home</Link><br/>
-        <Link to='/admin'>Admin</Link><br/>
-        <Link to='/login'>Login</Link><br/>
-        {button}
-      </nav>
+      <Navbar className = "navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="/">Foliospace</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
+            <NavItem className="nav-item active">
+              <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
+            </NavItem>
+            <NavItem>
+              <a className="nav-link" href="/dashboard">Dashboard</a>
+            </NavItem>
+          </ul>
+          <NavItem>
+              <a className="nav-link my-2 my-lg-0" href="/login">Login</a>
+          </NavItem>
+        </div>
+      </Navbar>
     );
   }
 });
+
