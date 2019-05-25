@@ -10,9 +10,9 @@
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server/index.js && node server/bin/www",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node server/bin/www",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "depend": "npm install && cd client && npm install",
+    "heroku-postbuild": "npm install && cd client && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "Arthur Liou, Andrea Dias, Sharaya Baker",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "concurrently": "^4.0.1"
   },
   "dependencies": {
+    "@okta/okta-react": "^1.2.0",
     "@okta/okta-sdk-nodejs": "^2.0.0",
     "@okta/okta-signin-widget": "^2.19.0",
     "body-parser": "^1.18.3",
@@ -34,11 +35,13 @@
     "express": "^4.16.4",
     "formidable": "^1.2.1",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "nodemon": "^1.18.11",
+    "pug": "^2.0.3",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.0"
   }
 }
