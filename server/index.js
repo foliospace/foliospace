@@ -6,23 +6,17 @@ var cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const db = require('../database-mysql');
 const morgan = require('morgan'); // HTTP request logger middleware for node.js
-//const passport = require('passport'); // For authentication
+const cors = require('cors');
 
 const app = express();
 
-// Connect to database
-/*
-db.connect((err) => {
-  if(err) {
-    throw err;
-  }
-  console.log('Database connected...');
-});
-*/
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+};
 
-app.use(bodyParser.urlencoded({
-  extended: false
-})); // Get data using req.body
+app.use(bodyParser.urlencoded({extended: false})); // Get data using req.body
+app.use(bodyParser.json());  
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,8 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(passport.initialize());
-//app.use(passport.session()); // persistent login sessions   
+app.use(cors(corsOptions));
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -42,7 +35,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter); 
 
 // Routes
-// app.use('/', require('./routes/general.js'));
 app.use('/admin', require('./routes/admin.js'));
 app.use('/portfolio', require('./routes/portfolio.js'));
 app.use('/projects', require('./routes/projects.js'));
