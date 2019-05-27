@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "client": "cd client && yarn start",
-    "server": "nodemon server/index.js && node server/bin/www",
+    "server": "node server/bin/www",
     "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "depend": "npm install && cd client && npm install",
     "heroku-postbuild": "npm install && cd client && npm install --only=dev --no-shrinkwrap && npm run build"
@@ -18,16 +18,15 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "babel-loader": "^8.0.5",
+    "babel-loader": "^8.0.6",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "concurrently": "^4.0.1"
   },
   "dependencies": {
-    "@okta/oidc-middleware": "^2.0.0",
+    "@okta/oidc-middleware": "^0.1.2",
     "@okta/okta-react": "^1.2.0",
     "@okta/okta-sdk-nodejs": "^2.0.0",
-    "@okta/okta-signin-widget": "^2.19.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -42,6 +41,7 @@
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0"
+    "react-scripts": "3.0.0",
+    "yarn": "^1.16.0"
   }
 }
