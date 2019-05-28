@@ -24,6 +24,7 @@
     "concurrently": "^4.0.1"
   },
   "dependencies": {
+    "@okta/oidc-middleware": "^2.0.0",
     "@okta/okta-react": "^1.2.0",
     "@okta/okta-sdk-nodejs": "^2.0.0",
     "@okta/okta-signin-widget": "^2.19.0",
@@ -33,13 +34,14 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "^4.16.4",
-    "formidable": "^1.2.1",
+    "express-session": "^1.16.1",
     "http-errors": "~1.6.3",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "nodemon": "^1.18.11",
     "pug": "^2.0.3",
     "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0"
