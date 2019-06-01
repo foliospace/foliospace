@@ -21,9 +21,9 @@ Foliospace is a portfolio website maker app that gives user the ability build th
 - 'npm install' in the main folder and client folder
 - 'yarn install' in the main folder
 - Update Any API keys in './client/src/app.config.js'. Gitignore is setup to ignore this file so security is maintained with keys not being pushed to Github.
-- Update the Okta keys in './server/lib/OktaClient.js'. Gitignore is setup to ignore this file so security is maintained with keys not being pushed to Github.
+- Update the Okta keys by copying './server/okta.config.example.js' and renaming it to 'okta.config.js'. Gitignore is setup to ignore 'okta.config.js', so security is maintained as keys and tokens not being pushed to Github.
 - Run 'yarn start' to start the application.
-- 'http://localhost:3000/' will open automatically once connected to the servers. This takes a couple of minutes. You will get a "success" message once connected.
+- Navigate to 'http://localhost:3000/'.
 
 ## Requirements
 

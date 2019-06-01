@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('server:server');
+var app = require('../index');
+var debug = require('debug')('foliospace:server');
 var http = require('http');
 
 /**
@@ -14,6 +14,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+console.log(`Server listening on port ${port}...`);
 
 /**
  * Create HTTP server.

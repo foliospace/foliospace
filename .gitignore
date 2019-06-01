@@ -2,12 +2,13 @@
 
 # dependencies
 /node_modules
+client/node_modules
 server/node_modules
 /.pnp
 .pnp.js
 
 # config files
-/server/lib/oktaClient.js
+/server/okta.config.js
 /client/src/app.config.js
 
 # testing

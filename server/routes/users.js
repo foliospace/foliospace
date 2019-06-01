@@ -1,6 +1,5 @@
-var express = require('express');
-var router = express.Router();
-const oktaClient = require('../lib/oktaClient');
+const express = require("express");
+const router = express.Router();
 
 /* Create a new User (register). */
 router.post('/', (req, res, next) => {
@@ -29,5 +28,12 @@ router.post('/', (req, res, next) => {
       res.send(err);
     });
 });
+
+// Log a user out
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
 
 module.exports = router;
