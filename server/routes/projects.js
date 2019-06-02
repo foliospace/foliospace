@@ -93,6 +93,32 @@ function deleteProject(prjId){
     });    
 }
 
+/**
+ * Upload files
+ */
+function uploadFiles(prjId){
+    // this is going to need fine-tuned ... there will need to be multiple project tables
+    // do a select first?
+    var queryString = "INSERT INTO project (file) VALUES (?)";
+    cloudinary.openUploadWidget({
+        cloudName: config.cloud_name, uploadPreset: config.cloud_name}, (error, result) => {
+            if (result && result.event === "success") {
+                // send the public_id of the image(s) to the DB
+                /*
+                var i;
+                var key;
+                for (i = 0; i < result.length; i++) {
+                    key = result.info.publicid;
+                    con.query(querystring, [key], function (err, res) {
+                        if (err) throw err;
+                        return res;
+                    })
+                }
+                */
+            }
+    });    
+}
+
 /*-------- END MODEL FUNCTIONS --------*/
 
 /*-------- BEGIN CONTROLLER FUNCTIONS --------*/
@@ -163,41 +189,9 @@ router.delete('/:projectId', function(req, res){
  * SOURCE: https://cloudinary.com/documentation/image_upload_api_reference#upload_method
  */
 
-router.post('/files', function(req,res) {
-  var widget = cloudinary.createUploadWidget({ 
-    cloudName: "demo", uploadPreset: "preset1" }, (error, result) => { });
-  widget.open();
+router.post('/:projectId/files', function(req,res) {
+
 })
-
-
-/****** FILE UPLOAD v1 ******/
-// SOURCES for File Upload: 
-// https://malcoded.com/posts/react-file-upload/
-// https://shiya.io/simple-file-upload-with-express-js-and-formidable-in-node-js/
-
-/*
-router.get('/files', function (req, res){
-    res.sendFile(__dirname + '/index.html');
-});
-
-router.post('/files', function (req, res){
-  var form = new IncomingForm();
-
-  form.parse(req);
-
-  form.on('file', (field, file) => {
-    // Do something with the file
-    // e.g. save it to the database
-    // you can access it using file.path
-    console.log('Uploaded ' + file.name);
-  });
-
-  form.on('end', () => {
-    res.json()
-  });
-
-});
-*/
 
 /*-------- END CONTROLLER FUNCTIONS --------*/
 
