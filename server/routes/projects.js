@@ -15,10 +15,10 @@ cloudinary.config({
 });
 
 var db = mysql.createConnection({
-    host: "wiad5ra41q8129zn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    user: "wxxl4ykpjxita1zv",
-    password: "ntyxgfb9x2dpyr4x",
-    database: "nn63dg6ksfqti6ih"
+    host: "",
+    user: "",
+    password: "",
+    database: ""
 });
 
 /*-------- BEGIN MODEL FUNCTIONS --------*/
