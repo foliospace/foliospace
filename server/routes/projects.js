@@ -1,7 +1,8 @@
 //const IncomingForm = require('formidable').IncomingForm;
 const express = require('express');
 var cloudinary = require('cloudinary').v2;
-const config = require('../config').cloudinary;
+const c_config = require('../config').cloudinary;
+const m_config = require('../config').mysql;
 var mysql = require('mysql');
 const request = require('request');
 const bodyParser = require('body-parser');
@@ -9,16 +10,16 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 
 cloudinary.config({ 
-    cloud_name: config.cloud_name,
-    api_key: config.api_key, 
-    api_secret: config.api_secret
+    cloud_name: c_config.cloud_name,
+    api_key: c_config.api_key, 
+    api_secret: c_config.api_secret
 });
 
 var con = mysql.createConnection({
-    host: "wiad5ra41q8129zn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    user: "wxxl4ykpjxita1zv",
-    password: "ntyxgfb9x2dpyr4x",
-    database: "nn63dg6ksfqti6ih"
+    host: m_config.host,
+    user: m_config.user,
+    password: m_config.password,
+    database: m_config.database
 });
 
 /*-------- BEGIN MODEL FUNCTIONS --------*/
