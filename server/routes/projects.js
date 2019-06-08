@@ -14,7 +14,7 @@ cloudinary.config({
     api_secret: config.api_secret
 });
 
-var db = mysql.createConnection({
+var con = mysql.createConnection({
     host: "wiad5ra41q8129zn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user: "wxxl4ykpjxita1zv",
     password: "ntyxgfb9x2dpyr4x",
@@ -29,7 +29,7 @@ var db = mysql.createConnection({
  */
 function getAllProjects(){
     var queryString = "SELECT * FROM portfolio";
-    db.query(queryString, function (err, result, fields) {
+    con.query(queryString, function (err, result, fields) {
         if (err) throw err;
         return result;
     });
@@ -38,19 +38,15 @@ function getAllProjects(){
 /** 
  * Get a specific project.
  */
-function getProject(prjId){
+var getProject = function (prjId, callback){
     var key = prjId;
     // Will need a link table between files and projects
-    var queryString = "SELECT * FROM portfolio WHERE projectId = ?";
-    db.query(queryString, [key], function (err, result, fields) {
+    var queryString = "SELECT * FROM project WHERE projectId = ?";
+    con.query(queryString, [key], function (err, result, fields) {
         if (err) {
-            throw err;
+            callback(err, null);
         } else {
-            var prj = {
-                'id':result[0].projectId,
-                'name':result[0].projectName
-            }
-            return prj;
+            callback(null, result);
         }
     });
 }
@@ -59,35 +55,45 @@ function getProject(prjId){
  * Create a new project.
  * This should redirect to a page that allows editing of the project.
  */
-function createProject(name, blurb){
-    var queryString = "INSERT INTO portfolio (projectName, projectBlurb) VALUES (?)";
-    con.query(queryString, [name, blurb], function (err, result) {
-        if (err) throw err;
-        return result;
+var createProject = async function (name, blurb, callback){
+    var queryString = "INSERT INTO project (`projectName`, `projectBlurb`) VALUES (?, ?)";
+    await con.query(queryString, [name, blurb], function (err, result) {
+        if (err) {
+            callback(err, null);
+        } else {
+            //console.log('createProject: Inside query result: ' + result.insertId);
+            callback(null, result.insertId);
+        }
     });
 }
 
 /** 
  * Update an existing project.
- * Currently only allows for changing the name.
  */
-function updateProject(name, blurb, prjId){
-    var queryString = "UPDATE project SET projectName = ?, projectBlurb = ?, WHERE projectId = ?";
-    con.query(queryString, [name, blurb, prjId], function (err, result) {
-        if (err) throw err;
-        return result;
+var updateProject = async function (name, blurb, prjId, callback){
+    var queryString = "UPDATE project SET `projectName` = ?, `projectBlurb` = ? WHERE `projectId` = ?";
+    await con.query(queryString, [name, blurb, prjId], function (err, result) {
+        if (err) {
+            callback(err, null);
+        } else {
+            console.log('updateProject result: ' + result);
+            callback(null, result);
+        }
     });    
 }
 
 /** 
  * Delete a project.
  */
-function deleteProject(prjId){
-    var key = prjId;
-    var queryString = "DELETE FROM portfolio WHERE projectId = ?";
-    con.query(queryString, [key], function (err, result) {
-        if (err) throw err;
-        return result;
+var deleteProject = async function (prjId, callback){
+    var queryString = "DELETE FROM project WHERE `projectId` = ?";
+    await con.query(queryString, [prjId], function (err, result) {
+        if (err) {
+            callback(err, null);
+        } else {
+            console.log(result);
+            callback(null, result);
+        }
     });    
 }
 
@@ -95,25 +101,28 @@ function deleteProject(prjId){
  * Upload files
  * SOURCE: https://cloudinary.com/documentation/image_upload_api_reference#upload_method
  */
-function uploadFiles(prjId){
-    // Need to updt query:
-    // >> fileId will be the auto-gen public_id from result JSON
-    // >> fileUrl is part of the result JSON
-    var queryString = "INSERT INTO project (file) VALUES (?)"; 
+function uploadFiles (prjId){
+    // fileId is the auto-gen public_id from result JSON
+    // fileUrl is part of the result JSON
+    var queryString = "INSERT INTO files (`fileId`, `projectId`, `fileUrl`) VALUES (?, ?, ?)"; 
     cloudinary.openUploadWidget({
         cloudName: config.cloud_name, 
         uploadPreset: config.cloud_name,
         folder: prjId
     }, (error, result) => {
             if (result && result.event === "success") {
-                // send the public_id of the image(s) to the DB
+                // send the public_id of the image(s) to the database
                 var i;
-                var key;
                 for (i = 0; i < result.length; i++) {
-                    key = result.info.publicid;
-                    con.query(querystring, [key], function (err, res) {
-                        if (err) throw err;
-                        return res;
+                    var fileId = result.info.publicid;
+                    var fileUrl = result.info.url;
+                    con.query(querystring, [fileId, prjid, fileUrl], function (err, res) {
+                        if (err) {
+                            throw err;
+                        } else {
+                            console.log(res);
+                            return res;
+                        }
                     })
                 }
             }
@@ -172,73 +181,99 @@ function deleteFile(fileId){
  * Get all of the user's projects.
  * Use this to list out projects.
  */
-router.get('/', function(req, res){
-    const projects = getAllProjects(req)
-    .then ( (projects) => {
-        res.status(200).json(projects);
-    });
+router.get('/', async function(req, res){
+    await getAllProjects(req, function(err, data) {
+        if (err) {
+            console.log('ERROR: ' + err);
+        } else {
+            res.status(200).json(projects);
+        }
+    })
 });
 
 /** 
  * Get a specific project.
  * This should redirect to a page that allows editing of the project.
  */
-router.get('/:projectId', function(req, res){
-    const prj = getProject(req.params.projectId)
-    .then( (prj) => {
-        res.render('project', {"prj": prj});
-        res.status(200).json(prj);
-    })
+router.get('/:projectId', async function(req, res){
+    await getProject(req.params.projectId, function(err, data) {
+        if (err) {
+            console.log('ERROR: ' + err);
+        } else {
+            console.log(data);
+            const accepts = req.accepts(['application/json']);
+            if(!accepts){
+                res.status(406).send('Oh snap. Content-Type must be application/json.');
+            } else if (accepts) {
+                res.status(200);
+                res.render('project', {"prj":data});
+            } else { 
+                res.status(500).send('Dang. Content-Type got messed up!'); 
+            }  
+        }
+    });
 });
 
 /** 
  * Create a new project.
  * This should redirect to a page that allows editing of the project (i.e. uploading photos).
  */
-router.post('/', function(req, res){
+router.post('/', async function(req, res){
     // SOURCE: http://classes.engr.oregonstate.edu/eecs/perpetual/cs493-400/modules/5-advanced-rest-api/3-nodejs-implementation/
     if(req.get('Content-Type') !== 'application/json'){
         res.status(415).send('Please resend with application/json data.');
     }    
     // Create the project
-    const prjId = createProject(req.body.name)
-    // Redirect to the edit page
-    .then( (prjId) => {
-        var options = {
-            method: 'GET',
-            url: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + prjId
-        }
-        request(options, (error, response) => {
-            if (error) {
-                res.render("error");
-            } else {
-                res.status(201);
+    await createProject(req.body.name, req.body.blurb, function(err, data) {
+        if (err) {
+            console.log('ERROR: ' + err);
+        } else {
+            console.log('Project created. ID: ' + data);
+            res.status(201).send('Success! Project created. ID: ' + data);
+            // Redirect to the project edit page
+            var options = {
+                method: 'GET',
+                url: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + data
             }
-        })
-    })
+            request(options, (error, response) => {
+                if (error) {
+                    res.render("error");
+                } else {
+                    res.status(200);
+                }
+            });
+        }
+    });
 });
-
 
 /** 
  * Update an existing project.
  * Currently only allows for changing the name and description.
  */
-router.put('/:projectId', function(req, res){
+router.put('/:projectId', async function(req, res){
     // SOURCE: http://classes.engr.oregonstate.edu/eecs/perpetual/cs493-400/modules/5-advanced-rest-api/3-nodejs-implementation/
     if(req.get('Content-Type') !== 'application/json'){
-        res.status(415).send('Please resend with application/json data.');
-    } 
-    updateProject(req.body.name, req.body.blurb, req.params.projectId)
-    // Return a 303 code with the location of the updated project ID in the appropriate header field
-    .then( res.location(req.protocol + "://" + req.get("host") + req.baseUrl + "/" + req.params.projectId).status(303).end() );
+        res.status(415).send('Please resend with application/json data.').end();
+    } else {
+        await updateProject(req.body.name, req.body.blurb, req.params.projectId, function(err, data) {
+            // Return a 303 code with the location of the updated project ID in the appropriate header field
+            res.location(req.protocol + "://" + req.get("host") + req.baseUrl + "/" + req.params.projectId).status(303).end();
+        });
+    }
 });
 
 /** 
  * Delete a project.
  */
-router.delete('/:projectId', function(req, res){
-    deleteProject(req.params.projectId)
-    .then(res.status(204).end());
+router.delete('/:projectId', async function(req, res){
+    await deleteProject(req.params.projectId, function(err, data) {
+        if (err) {
+            console.log('ERROR: ' + err);
+        } else {
+            res.status(204).end();
+        }      
+    });
+    
 });
 
 /** 
@@ -246,8 +281,8 @@ router.delete('/:projectId', function(req, res){
  * SOURCE: https://cloudinary.com/documentation/image_upload_api_reference#upload_method
  */
 router.post('/:projectId/files', function(req, res) {
-    uploadFiles(req.params.projectId)
-    .then(res.status(200));
+    uploadFiles(req.params.projectId); 
+    res.status(201);
 });
 
 /**

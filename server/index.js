@@ -50,7 +50,7 @@ app.use('/portfolio', require('./routes/portfolio.js'));
 app.use('/projects', require('./routes/projects.js'));
 app.use('/account', require('./routes/account.js'));
 
-app.get('/admin', oidc.ensureAuthenticated(), (req, res) => {
+app.get('/admin', auth.oidc.ensureAuthenticated(), (req, res) => {
 
   res.send(JSON.stringify(req.userContext.userinfo));
 });

@@ -1,0 +1,18 @@
+extends layout
+block content
+    form#editprj(action='#', method='post')
+        .form-group
+            label(for='projectName') Project Name
+            input#projectName.form-control(type='text', name='projectName')
+            p
+            .form-group
+                label(for='projectBlurb') Project Description
+                textarea#projectBlurb.form-control(name='projectBlurb', rows='15', cols='30')
+            p
+                input.btn.btn-primary.btn-block(type='submit', value='Save')
+            pre#output.
+    form#upload(action='#', method='post')
+        .form-group
+            label(for='uploadFiles') Upload Files
+            input.btn.btn-primary.btn-block(type='submit', value='Browse')            
+            script(src='/javascript/project_form_handler.js')
