@@ -90,6 +90,7 @@ var deleteProject = async function (prjId, callback){
     var queryString = "DELETE FROM project WHERE `projectId` = ?";
     await con.query(queryString, [prjId], function (err, result) {
         if (err) {
+            console.log("ERROR: " + err);
             callback(err, null);
         } else {
             console.log(result);
@@ -102,32 +103,25 @@ var deleteProject = async function (prjId, callback){
  * Upload files
  * SOURCE: https://cloudinary.com/documentation/image_upload_api_reference#upload_method
  */
-function uploadFiles (prjId){
+var uploadFiles = async function (data, prjId, callback){
+    // send the public_id of the image(s) to the database
     // fileId is the auto-gen public_id from result JSON
-    // fileUrl is part of the result JSON
-    var queryString = "INSERT INTO files (`fileId`, `projectId`, `fileUrl`) VALUES (?, ?, ?)"; 
-    cloudinary.openUploadWidget({
-        cloudName: config.cloud_name, 
-        uploadPreset: config.cloud_name,
-        folder: prjId
-    }, (error, result) => {
-            if (result && result.event === "success") {
-                // send the public_id of the image(s) to the database
-                var i;
-                for (i = 0; i < result.length; i++) {
-                    var fileId = result.info.publicid;
-                    var fileUrl = result.info.url;
-                    con.query(querystring, [fileId, prjid, fileUrl], function (err, res) {
-                        if (err) {
-                            throw err;
-                        } else {
-                            console.log(res);
-                            return res;
-                        }
-                    })
-                }
+    // fileUrl is part of the result JSON 
+    var queryString = "INSERT INTO files (`fileId`, `projectId`, `fileUrl`) VALUES (?, ?, ?)";
+    //var i;
+    //for (i = 0; i < data.length; i++) {
+        var fileId = data.info.public_id;
+        var fileUrl = data.info.url;
+        await con.query(queryString, [fileId, prjId, fileUrl], function (err, result) {
+            if (err) {
+                console.log("ERROR: " + err);
+                callback(err, null);
+            } else {
+                console.log(result);
+                callback(null, result);
             }
-    });    
+        });
+    //}
 }
 
 /**
@@ -281,9 +275,14 @@ router.delete('/:projectId', async function(req, res){
  * Upload Images to project
  * SOURCE: https://cloudinary.com/documentation/image_upload_api_reference#upload_method
  */
-router.post('/:projectId/files', function(req, res) {
-    uploadFiles(req.params.projectId); 
-    res.status(201);
+router.post('/:projectId/files', async function(req, res) {
+    await uploadFiles(req.body, req.params.projectId, function(err, data) {
+        if (err) {
+            console.log('ERROR: ' + err);
+        } else {
+            res.status(201).json(data);
+        }
+    }); 
 });
 
 /**

@@ -48,9 +48,25 @@
         var form = document.getElementById( "upload" );
 		form.addEventListener( "submit", function( e ) {
             e.preventDefault();
-            var XHR = new XMLHttpRequest();
-            XHR.open('POST', document.URL + '/files');
-            XHR.send();
+            var urlPath = document.location.pathname.split('/');
+            var prjId = urlPath[2];
+            var widget = window.cloudinary.openUploadWidget({
+                cloudName: 'foliospace', 
+                uploadPreset: 'foliospace',
+                folder: prjId
+            },             
+            (error, result) => {
+                if (result && result.event === "success") {   
+                    //output.innerHTML = JSON.stringify(result);  
+                    // send the public_id of the image(s) to the database
+                    var XHR = new XMLHttpRequest();
+                    XHR.open('POST', document.URL + '/files');
+                    XHR.setRequestHeader('Content-Type', 'application/json');
+                    XHR.send(JSON.stringify(result));                    
+                } else {
+                    console.log(error);
+                }
+            });  
 		}, false);        
     });
 
