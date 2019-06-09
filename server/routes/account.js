@@ -1,5 +1,5 @@
 /**
- * The Account Page allows a uwer to update their own account details. Emails cannot be changed
+ * The Account Page allows a user to update their own account details. Emails cannot be changed
  */
 
 const express = require('express');
@@ -10,10 +10,8 @@ const db = require('../../database-mysql/db');
 router.get('/', (req, res) => {
     // console.log("Current User Email", req.user.profile.email)
     let queryString = "SELECT * FROM users WHERE userEmail = '" + req.user.profile.email + "'";
-    // console.log(queryString);
     db.connection.query(queryString, function (err, rows, fields) {
-        var person;
-
+        let person;
         if (err) {
             res.status(500).json({
                 "status_code": 500,
@@ -21,7 +19,7 @@ router.get('/', (req, res) => {
             });
         } else {
             if (rows.length == 1) {
-                var person = {
+                let person = {
                     'id': rows[0].id,
                     'userName': rows[0].userName,
                     'userEmail': rows[0].userEmail,
@@ -61,7 +59,6 @@ router.post('/:id', (req, res) => {
             let queryString = "SELECT * FROM users WHERE id = " + req.params.id;
             db.connection.query(queryString, function (err, rows, fields) {
                 let person;
-
                 if (err) {
                     res.status(500).json({
                         "status_code": 500,

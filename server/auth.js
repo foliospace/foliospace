@@ -1,8 +1,9 @@
 const okta = require("@okta/okta-sdk-nodejs");
 const ExpressOIDC = require("@okta/oidc-middleware").ExpressOIDC;
 
-const oktaConfig = require('./okta.config');
+const oktaConfig = require('./config/okta.config');
 // console.log("CHECK OKTA_CONFIG", oktaConfig);
+
 // Define an Okta client so any user management tasks can be performed
 const oktaClient = new okta.Client({
   orgUrl: oktaConfig.url,
@@ -27,6 +28,5 @@ const oidc = new ExpressOIDC({
     }
   }
 });
-
 
 module.exports = { oidc, oktaClient };
