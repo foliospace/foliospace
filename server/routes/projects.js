@@ -1,11 +1,11 @@
 //const IncomingForm = require('formidable').IncomingForm;
 const express = require('express');
 var cloudinary = require('cloudinary').v2;
-const c_config = require('../config').cloudinary;
-const m_config = require('../config').mysql;
-var mysql = require('mysql');
+const configObj = require('../config');
+const c_config = configObj.cloudinary;
+const m_config = configObj.mysql;
+const mysql = require('mysql');
 const request = require('request');
-const bodyParser = require('body-parser');
 
 const router = express.Router();
 
