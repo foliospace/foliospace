@@ -1,0 +1,34 @@
+extends layout
+
+block variables
+  - var title = "Admin"
+
+block content
+  h2.text-center User Administration
+	
+  body
+    h1= 'All Users'
+  table
+    tr
+      td= "id"
+      td= "Username"
+      td= "Email"
+      td= "Display name"
+      td= "PortfolioURL"
+      td= "LinkedIn"
+      td= "Github"
+      td= "Delete Accounts"
+    for person in personList
+      tr
+        td= person.id
+        td= person.userName
+        td= person.userEmail
+        td= person.displayName
+        td
+          a(href='/portfolio/'+person.userUrl target="_blank") #{person.userUrl}
+        td
+          a(href=person.linkedinURL target="_blank") #{person.linkedinURL}
+        td
+          a(href=person.githubURL target="_blank") #{person.githubURL}
+        td
+          a.p-2.text-dark(href='/admin/delete/'+person.id) Delete Account

@@ -1,0 +1,37 @@
+extends layout
+
+block variables
+  - var title = "Account"
+
+block content
+  h2.text-center Account Details
+
+  form(method='POST' action="/account/" + person.id)
+    div.form-group
+      label(for='name') Name:
+      input#name.form-control(type='text', value=person.userName name='name')
+    div.form-group
+      label(for='email') Email:
+      input#email.form-control(type='email', value=person.userEmail name='email', disabled)
+    div.form-group
+      label(for='displayName') Display Name
+      input#displayName.form-control(type='text', value=person.displayName name='displayName')
+    div.form-group
+      label(for='userUrl') Portfolio URL. Your portfolio will be located at www.foliospace.com/portfolio/your_defined_url
+      input#userUrl.form-control(type='text', value=person.userUrl name='userUrl')
+    div.form-group
+      label(for='school') School Name:
+      input#name.form-control(type='text', value=person.schoolName name='school')
+    div.form-group
+      label(for='degree') Degree:
+      input#email.form-control(type='text', value=person.degree name='degree')
+    div.form-group
+      label(for='gradDate') Graduation Date
+      input#gradDate.form-control(type='date', value=person.gradDate name='gradDate')
+    div.form-group
+      label(for='LinkedIn') LinkedIn:
+      input#LinkedIn.form-control(type='url' value=person.linkedinURL name='linkedinURL')
+    div.form-group
+      label(for='Github') Github:
+      input#Github.form-control(type='url' value=person.githubURL name='githubURL')
+    button.btn.btn-primary(type='submit') Update Account Details
