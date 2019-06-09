@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    // ADAPTED FROM "JavaScript: serialize a form as JSON"
+    // ORIGINAL AUTHOR: Gabriele Romanato
+    // SOURCE: https://codepen.io/gabrieleromanato/pen/LpLVeQ
+    form#editprj(action='#', method='post')
+        .form-group
+            label(for='projectName') Project Name
+            textarea#projectName.form-control(name='projectName', rows='1', cols='20') #{projectName}
+            p
+            .form-group
+                label(for='projectBlurb') Project Description
+                textarea#projectBlurb.form-control(name='projectBlurb', rows='10', cols='20') #{projectBlurb}
+            p
+                input.btn.btn-primary.btn-block(type='submit', value='Save')
+            pre#output.
+    form#upload(action='#', method='post')
+        .form-group
+            input.btn.btn-primary.btn-block(type='submit', value='Upload Files')            
+    script(src='/javascript/project_form_handler.js')
+    script(src='https://widget.cloudinary.com/v2.0/global/all.js', type='text/javascript')
