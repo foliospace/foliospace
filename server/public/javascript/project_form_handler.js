@@ -19,7 +19,22 @@
 			}
 		}
 		return obj;
-	}
+    }
+    /*
+    document.addEventListener( "DOMContentLoaded", function() {
+        var XHR = new XMLHttpRequest();
+        XHR.open('GET', document.URL);
+        //XHR.setRequestHeader('Content-Type', 'application/json');
+        XHR.onload = function () {
+            if (XHR.readyState === XHR.DONE) {
+                if (XHR.status === 200) {
+                    document.getElementById( "projectName" ).value = JSON.stringify(XHR.responseText);
+                    document.getElementById( "projectBlurb" ).value = JSON.stringify(XHR.responseText);
+                }
+            }
+        };
+        XHR.send(null);        
+    })*/
 
 	document.addEventListener( "DOMContentLoaded", function() {
 		var form = document.getElementById( "editprj" );

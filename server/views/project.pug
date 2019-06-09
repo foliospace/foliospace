@@ -7,11 +7,11 @@ block content
     form#editprj(action='#', method='post')
         .form-group
             label(for='projectName') Project Name
-            input#projectName.form-control(type='text', name='projectName')
+            textarea#projectName.form-control(name='projectName', rows='1', cols='20') #{projectName}
             p
             .form-group
                 label(for='projectBlurb') Project Description
-                textarea#projectBlurb.form-control(name='projectBlurb', rows='15', cols='30')
+                textarea#projectBlurb.form-control(name='projectBlurb', rows='10', cols='20') #{projectBlurb}
             p
                 input.btn.btn-primary.btn-block(type='submit', value='Save')
             pre#output.

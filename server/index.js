@@ -11,7 +11,6 @@ const session = require("express-session");
 const auth = require("./auth");
 const middleware = require("./middleware");
 
-
 const dashboardRouter = require("./routes/dashboard");
 const homeRouter = require("./routes/home");
 const usersRouter = require("./routes/users");
@@ -45,13 +44,15 @@ app.use(auth.oidc.router);
 app.use(middleware.addUser);
 
 // Routes
-app.use('/admin', require('./routes/admin.js'));
-app.use('/portfolio', require('./routes/portfolio.js'));
-app.use('/projects', require('./routes/projects.js'));
-app.use('/account', require('./routes/account.js'));
+app.use("/", homeRouter);
+app.use("/dashboard", middleware.loginRequired, dashboardRouter);
+app.use("/users", usersRouter);
+app.use('/admin', require('../server/routes/admin.js'));
+app.use('/portfolio', require('../server/routes/portfolio.js'));
+app.use('/projects', require('../server/routes/projects.js'));
+app.use('/account', require('../server/routes/account.js'));
 
 app.get('/admin', auth.oidc.ensureAuthenticated(), (req, res) => {
-
   res.send(JSON.stringify(req.userContext.userinfo));
 });
 

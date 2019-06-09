@@ -10,6 +10,7 @@ server/node_modules
 # config files
 /server/okta.config.js
 /client/src/app.config.js
+/server/config/index.js
 
 # testing
 /coverage

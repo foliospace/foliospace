@@ -200,8 +200,10 @@ router.get('/:projectId', async function(req, res){
             if(!accepts){
                 res.status(406).send('Oh snap. Content-Type must be application/json.');
             } else if (accepts) {
+                name = data.projectName;
+                blurb = data.projectBlurb;
                 res.status(200);
-                res.render('project', {"prj":data});
+                res.render('project', { projectName: name, projectBlurb: blurb });
             } else { 
                 res.status(500).send('Dang. Content-Type got messed up!'); 
             }  
