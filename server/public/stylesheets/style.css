@@ -20,10 +20,20 @@ footer {
   margin-top: 1em;
 }
 
-h2 {
+/* h1, h2 {
   margin-bottom: 2em;
-}
+} */
 
 .container {
   padding-top: 2em;
+}
+
+table, th, td {
+   border: 1px solid black;
+   width: 100%;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
 }

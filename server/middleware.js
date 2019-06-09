@@ -1,6 +1,5 @@
 const auth = require("./auth");
 
-
 // Tack a user object onto each request if possible
 function addUser(req, res, next) {
   if (!req.userinfo) {
@@ -17,7 +16,6 @@ function addUser(req, res, next) {
     });
 };
 
-
 // Only let the user access the route if they are authenticated.
 function loginRequired(req, res, next) {
   if (!req.user) {
@@ -26,6 +24,5 @@ function loginRequired(req, res, next) {
 
   next();
 }
-
 
 module.exports = { addUser, loginRequired };
