@@ -24,14 +24,14 @@ block content
                     td= project.projectName
                     td
                         //a(href='/projects/'+project.projectId) #{project.projectName}
-                        form#viewPrj(action='/projects/'+project.projectId, method='get')
+                        form#getPrj(action='/projects/'+project.projectId, method='get')
                             .form-group
-                                input.btn.btn-primary.btn-block(type='submit', value='View')
+                                input.edPrj.btn.btn-primary.btn-block(type='submit', value='View')
                     td
-                        form#deletePrj(action='/projects/'+project.projectId, method='delete')
+                        form#deletePrj.delPrj(formmethod='post')
                             .form-group
-                                input#prjId(type='hidden', name='prjId', value=project.projectId)
-                                input.btn.btn-primary.btn-block(type='submit', value='Delete') 
+                                input#prjId(type="hidden", name="prjId", value=project.projectId)
+                                input.btn.btn-default.btn-block(type='submit', value='Delete') 
     script(src='/javascript/delete_project.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
 

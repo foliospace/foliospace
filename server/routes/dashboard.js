@@ -10,6 +10,7 @@ const db = require('../../database-mysql/db');
 router.get("/", (req, res) => {
   // console.log("Dashboard Request", req.user.profile.email);
   let queryString = "SELECT * FROM users WHERE userEmail = '" + req.user.profile.email + "'";
+  let person;
   db.connection.query(queryString, function (err, rows, fields) {
     if (err) {
       res.status(500).json({
@@ -18,7 +19,7 @@ router.get("/", (req, res) => {
       });
     } else {
       if (rows.length == 1) {
-        let person = {
+        person = {
           'id': rows[0].id,
           'userName': rows[0].userName,
           'userEmail': rows[0].userEmail,
@@ -31,6 +32,7 @@ router.get("/", (req, res) => {
           'gradDate': rows[0].gradDate
         }
         console.log("Dashboard: Person Info", person)
+        res.render("dashboard", {"person":person});
       } else {
           let queryString = "INSERT INTO users (userEmail) VALUES ('" + req.user.profile.email + "')";
           db.connection.query(queryString, function (err, rows, fields) {
@@ -46,7 +48,6 @@ router.get("/", (req, res) => {
       }
     }
   });
-  res.render("dashboard");
 });
 
 module.exports = router;

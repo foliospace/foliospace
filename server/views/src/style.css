@@ -1,0 +1,227 @@
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body{
+    margin: 0;
+	padding: 0;
+	background-color: #F8F8F8;
+}
+
+.nav-container { /*name of combined div of nav-section and nav-name */
+  list-style: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 40px;
+  background-color:black;
+  padding-bottom: 15px;
+  padding-top: 10px;
+  display: inline-block;
+  vertical-align: middle;
+
+}
+
+.container {
+  width: 100%; /* static width container always stays at this width no matter what the window size */
+  overflow: hidden;
+
+
+}
+
+.container h1{  /* Andrea Dias */
+  font-size: 35px;
+  margin-top: -20px;
+  font-weight: bold;
+  font-size: 60px;
+  text-align: center;
+  font-family: 'apercubold', sans-serif;
+}
+
+.container h2{  /* Hi I'm */
+  margin-top: 310px;
+  font-size: 35px;
+  text-align: center;
+  font-weight: normal;
+  font-family: 'apercuregular', sans-serif;
+}
+
+.button { /*Thanks for stopping by */	
+	background-color: #8b4789; 
+  	border: none;
+  	color: white;
+  	padding: 15px 30px;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 15px;
+  	font-family: 'aperculight', sans-serif;
+  	text-align: center;
+  	font-weight: normal;
+  	letter-spacing: 0.5px;
+
+}
+
+
+
+/********SECTIONS*****************************/
+#home{
+  width: 100%;
+  height: 100vh;
+  background-color: #F8F8F8;
+}
+
+#education{
+  height: 400px;
+  display: inline-block;
+  width: 100%;
+}
+
+
+#contact {
+	width: 100%;
+	display: inline-block;
+}
+
+/*********SECTION END***********************************/
+
+#nav-links, #nav-name {
+	display: inline-block;
+	float: right; 
+	
+}
+
+
+#nav-links ul li  {
+	display: inline-block;
+	list-style-type: none;
+	margin: 0px 30px 0px 0px;
+
+
+} 
+
+#nav-links ul li a { /*links in the nav bar*/
+	color: white;
+	text-decoration: none;
+	font-weight: medium;
+	text-transform: uppercase;
+	font-family: 'apercumedium', sans-serif;
+	font-size: 14px;
+	letter-spacing: 1.5px;
+	padding-top: -4px;
+	
+}
+
+
+#nav-name { /* this is just the Andrea Dias in the nav bar */
+	color: #8b4789;
+	font-family: 'apercuregular', sans-serif;
+	font-weight: regular;
+	font-size: 20px;
+	float: left;
+	margin-left: 50px; 
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	padding-top: 12px;
+
+} 
+
+
+p {
+	font-family: 'apercuregular', sans-serif;
+	font-weight: normal;
+	font-size: 16px;
+	text-align: left;
+	margin-left: 45%;
+	margin-top: -10px;
+	
+	
+}
+
+h5 {
+  margin-bottom: 40px;
+  color: #8b4789;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'apercuregular', sans-serif;
+  font-size: 35px;
+
+}
+
+
+.images { /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px 80px 0px 80px;
+}
+
+
+figure {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  margin: 0;
+  overflow: hidden;
+}
+
+
+
+figcaption {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  margin-top: 20px;
+  font-family: 'apercuregular', sans-serif;
+  font-size: 14px;
+  margin-bottom: 50px;
+}
+
+img {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  border: none;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  background: #ccc;
+  transition: transform .2s ease-in-out;
+}
+
+.images a {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  display: inline-block;
+  margin-bottom: 8px;
+  width: calc(50% - 4px);
+  margin-right: 8px;
+  text-decoration: none;
+  color: black;
+}
+
+@media screen and (min-width: 50em) {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  a {
+    width: calc(25% - 6px);
+  }
+  
+  a:nth-of-type(2n) {
+    margin-right: 8px;
+  }
+  
+  a:nth-of-type(4n) {
+    margin-right: 0;
+  }
+}
+
+
+.images a:hover img {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  transform: scale(1.02);
+}
+
+.images a:nth-of-type(2n) {  /* source: https://codepen.io/SitePoint/pen/bEvVqP */
+  margin-right: 0;
+}
+
+hr { 
+  display: block;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+  margin-left: 60px;
+  margin-right: 60px;
+  border-style: inset;
+  border-color: black;
+  border-width: 0.6px;
+}
+
+
