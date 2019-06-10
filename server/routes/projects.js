@@ -1,4 +1,3 @@
-//const IncomingForm = require('formidable').IncomingForm;
 const express = require('express');
 var cloudinary = require('cloudinary').v2;
 const configObj = require('../config');

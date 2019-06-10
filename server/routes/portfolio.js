@@ -1,32 +1,23 @@
-/* The route /portfolio will display user dashboard:
- *  -> Title
- *  -> About / Bio
- *  -> Social links
- *  -> Text box
- *  -> Contact
- *  -> Projects
- *      -> Clicking edit, delete, or create button directs to /projects route
- */
-
 const express = require('express');
+const configObj = require('../config');
+const m_config = configObj.mysql;
+const mysql = require('mysql');
+
 const router = express.Router();
 
-module.exports = router;
+var con = mysql.createConnection({
+    host: m_config.host,
+    user: m_config.user,
+    password: m_config.password,
+    database: m_config.database
+});
 
 /* --- MODELS --- */
-function getPortfolio() {
-
-}
 
 /* --- CONTROLLERS --- */
 
-router.get('/', (req, res) => {
-    console.log("GET /portfolio");
-    res.status(200).send("GET /portfolio");
+router.get('/:userUrl', function(req, res){
+    res.render('portfolio');
 });
 
-router.post('/', (req, res) => {
-    // New user will need a new instance of portfolio
-    console.log("POST /portfolio");
-    res.status(200).send("POST /portfolio");
-})
+module.exports = router;

@@ -1,0 +1,26 @@
+@media screen and (min-width: 992px) , screen and (max-height: 900px) {
+
+#home{
+       background-size: cover;
+
+ }
+}
+
+@media screen and (min-width: 768px)  , screen and (max-height: 700px) {
+
+#home{
+       background-size: cover;
+
+
+ }
+}
+
+@media screen and (min-width: 600px) , screen and (max-height: 600px){
+
+#home{
+       background-size: cover;
+
+
+ }
+}
+

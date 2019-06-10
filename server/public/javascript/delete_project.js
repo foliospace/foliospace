@@ -1,9 +1,6 @@
-(function myFunction() {
-  
-	document.addEventListener( "DOMContentLoaded", function() {
-        var form = document.getElementById( "deletePrj" );
-		form.addEventListener( "submit", function( e ) {
-            e.preventDefault();
+(function deleteProject() {
+    document.addEventListener( "DOMContentLoaded", function() {
+        $('.delPrj').on('click', function () {
             // REFERENCE: https://stackoverflow.com/questions/9139075/how-to-show-a-confirm-message-before-delete
             var result = confirm("Are you sure you want to delete this project?");
             if (result) {
@@ -29,8 +26,9 @@
                 //For debug only:
                 //document.getElementById("test").innerHTML = "DELETE " + document.URL + '/' + prjId; 
                 XHR.send(null);
-            }                
-        }, false);
-        
+            } else {
+                location.reload();
+            } 
+        })
     });
 })();
