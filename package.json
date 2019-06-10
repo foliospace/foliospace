@@ -22,8 +22,7 @@
     "babel-preset-react": "^6.23.0",
     "concurrently": "^4.0.1",
     "dotenv": "^8.0.0",
-    "nodemon": "^1.18.11",
-    "morgan": "^1.9.1"        
+    "nodemon": "^1.18.11"
   },
   "dependencies": {
     "@okta/oidc-middleware": "^0.1.2",
@@ -37,6 +36,7 @@
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "http-errors": "~1.6.3",
+    "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "pug": "^2.0.3",
     "react": "^16.8.6",
