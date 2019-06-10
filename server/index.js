@@ -48,8 +48,8 @@ app.use("/", homeRouter);
 app.use("/dashboard", middleware.loginRequired, dashboardRouter);
 app.use("/users", middleware.loginRequired, usersRouter);
 app.use('/admin', middleware.loginRequired, require('../server/routes/admin.js'));
-app.use('/portfolio', require('../server/routes/portfolio.js'));
-app.use('/projects', require('../server/routes/projects.js'));
+app.use('/portfolio', middleware.loginRequired, require('../server/routes/portfolio.js'));
+app.use('/projects', middleware.loginRequired, require('../server/routes/projects.js'));
 app.use('/account', middleware.loginRequired, require('../server/routes/account.js'));
 
 app.get('/admin', auth.oidc.ensureAuthenticated(), (req, res) => {

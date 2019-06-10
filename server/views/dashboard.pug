@@ -1,15 +1,44 @@
 extends layout
 
 block variables
-  - var title = "Dashboard"
+    - var title = "Dashboard"
 
 block content
-  h2.text-center Dashboard
+    h2.text-center Dashboard
 
-  .row
-    .offset-sm-2.col-sm-8
-      .jumbotron.text-center.
-        Welcome to your dashboard page, #{user.profile.firstName}.
-  .row.offset-sm-2.col-sm-8
-    p If this is your first time visiting Foliospace, click on the Account tab to add your profile details.
-    P Then you can click on the Projects tab to add your projects.
+    .row
+        .jumbotron.jumbotron-fluid.text-center
+            .container
+                h2.display-4 Welcome to your dashboard page, #{user.profile.firstName}. 
+                p.lead 
+                    | What would you like to do today?
+                p
+                    | If this is your first time visiting Foliospace, click the Account tab to add your profile details.
+                    | Then you can click on the Projects tab to add your projects. 
+    // SOURCE: https://getbootstrap.com/docs/4.0/components/card/#using-grid-markup
+    .container-fluid
+        .row
+            .col-sm-6
+                .card
+                    .card-body
+                        h5.card-title Start a New Project 
+                        form#newPrj(action='/projects', method='post')
+                            input.btn.btn-primary(type='submit', value='Take Me There')                        
+            .col-sm-6
+                .card
+                    .card-body
+                        h5.card-title Edit an Existing Project
+                        a.btn.btn-primary(href='/projects', method='post') Take Me There    
+        .row    
+            .col-sm-6
+                .card
+                    .card-body
+                        h5.card-title Update my Info
+                        a.btn.btn-primary(href='/account', method='get') Take Me There
+            .col-sm-6
+                .card
+                    .card-body
+                        h5.card-title View my Portfolio Page
+                        a.btn.btn-primary(href='/portfolio', method='get') Take Me There                         
+
+    script(src='/javascript/project_form_handler.js')

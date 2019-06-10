@@ -28,22 +28,25 @@ var con = mysql.createConnection({
  * Get all of the user's projects.
  * Use this to list out projects.
  */
-function getAllProjects(){
-    var queryString = "SELECT * FROM portfolio";
-    con.query(queryString, function (err, result, fields) {
-        if (err) throw err;
-        return result;
+var getAllProjects = async function (name, callback){
+    var queryString = "SELECT * FROM project WHERE `login` = ?";
+    await con.query(queryString, [name], function (err, result, fields) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
     });
 }
 
 /** 
  * Get a specific project.
  */
-var getProject = function (prjId, callback){
+var getProject = async function (prjId, callback){
     var key = prjId;
     // Will need a link table between files and projects
     var queryString = "SELECT * FROM project WHERE projectId = ?";
-    con.query(queryString, [key], function (err, result, fields) {
+    await con.query(queryString, [key], function (err, result, fields) {
         if (err) {
             callback(err, null);
         } else {
@@ -56,9 +59,9 @@ var getProject = function (prjId, callback){
  * Create a new project.
  * This should redirect to a page that allows editing of the project.
  */
-var createProject = async function (name, blurb, callback){
-    var queryString = "INSERT INTO project (`projectName`, `projectBlurb`) VALUES (?, ?)";
-    await con.query(queryString, [name, blurb], function (err, result) {
+var createProject = async function (name, blurb, login, callback){
+    var queryString = "INSERT INTO project (`projectName`, `projectBlurb`, `login`) VALUES (?, ?, ?)";
+    await con.query(queryString, [name, blurb, login], function (err, result) {
         if (err) {
             callback(err, null);
         } else {
@@ -177,11 +180,23 @@ function deleteFile(fileId){
  * Use this to list out projects.
  */
 router.get('/', async function(req, res){
-    await getAllProjects(req, function(err, data) {
+    let projectList = [];
+    await getAllProjects(req.user.profile.login, function(err, data) {
         if (err) {
             console.log('ERROR: ' + err);
         } else {
-            res.status(200).json(projects);
+            console.log(data);
+            var i;
+            for (i = 0; i < data.length; i++) {
+                let project = {
+                    'projectId': data[i].projectId,
+                    'projectName': data[i].projectName 
+                }
+                projectList.push(project);
+            }
+            console.log(JSON.stringify(projectList));
+            res.status(200);
+            res.render('project_list', {"projectList": projectList});
         }
     })
 });
@@ -191,6 +206,7 @@ router.get('/', async function(req, res){
  * This should redirect to a page that allows editing of the project.
  */
 router.get('/:projectId', async function(req, res){
+    let project;
     await getProject(req.params.projectId, function(err, data) {
         if (err) {
             console.log('ERROR: ' + err);
@@ -198,14 +214,17 @@ router.get('/:projectId', async function(req, res){
             console.log(data);
             const accepts = req.accepts(['application/json']);
             if(!accepts){
-                res.status(406).send('Oh snap. Content-Type must be application/json.');
+                res.status(406).send('Content-Type must be application/json.');
             } else if (accepts) {
-                name = data.projectName;
-                blurb = data.projectBlurb;
+                project = {
+                    'projectId': data[0].projectId,
+                    'projectName': data[0].projectName,
+                    'projectBlurb': data[0].projectBlurb
+                }
                 res.status(200);
-                res.render('project', { projectName: name, projectBlurb: blurb });
+                res.render('project', { "project": project });
             } else { 
-                res.status(500).send('Dang. Content-Type got messed up!'); 
+                res.status(500).send('Content-Type got messed up!'); 
             }  
         }
     });
@@ -216,17 +235,17 @@ router.get('/:projectId', async function(req, res){
  * This should redirect to a page that allows editing of the project (i.e. uploading photos).
  */
 router.post('/', async function(req, res){
-    // SOURCE: http://classes.engr.oregonstate.edu/eecs/perpetual/cs493-400/modules/5-advanced-rest-api/3-nodejs-implementation/
-    if(req.get('Content-Type') !== 'application/json'){
-        res.status(415).send('Please resend with application/json data.');
-    }    
     // Create the project
-    await createProject(req.body.name, req.body.blurb, function(err, data) {
+    var name = "";
+    var blurb = null;
+    await createProject(name, blurb, req.user.profile.login, function(err, data) {
         if (err) {
+            console.log(name + ", " + blurb + ", " + req.user.profile.login);
             console.log('ERROR: ' + err);
         } else {
             console.log('Project created. ID: ' + data);
-            res.status(201).send('Success! Project created. ID: ' + data);
+            res.redirect(301,'/projects/' + data);
+            /*
             // Redirect to the project edit page
             var options = {
                 method: 'GET',
@@ -239,6 +258,7 @@ router.post('/', async function(req, res){
                     res.status(200);
                 }
             });
+            */
         }
     });
 });
