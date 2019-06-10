@@ -1,0 +1,31 @@
+{
+  "name": "FolioSpace",
+  "description": "Portfolio Maker Web Application",
+  "keywords": [],
+  "website": "https://foliospace.heroku.com/",
+  "repository": "https://https://github.com/foliospace/foliospace",
+  "success_url": "/",
+  "scripts": {},
+  "env": {
+    "DB_HOST": { "required": true },
+    "DB_USER": { "required": true },
+    "DB_PASSWORD": { "required": true },
+    "DB_DATABASE": { "required": true },
+    "CLOUDINARY_CLOUD_NAME": { "required": true },
+    "CLOUDINARY_API_KEY": { "required": true },
+    "CLOUDINARY_API_SECRET": { "required": true },
+    "OKTA_ORG_URL": { "required": true },
+    "OKTA_ISSUER": { "required": true },
+    "OKTA_CLIENT_ID": { "required": true },
+    "OKTA_CLIENT_SECRET": { "required": true },
+    "OKTA_REDIRECT_URI": { "required": true },
+    "OKTA_SECRET": { "required": true },
+    "OKTA_TOKEN": { "required": true }
+  },
+  "addons": [
+    "jawsdb"
+  ],
+  "buildpacks": [{
+    "url": "heroku/nodejs"
+  }]
+}

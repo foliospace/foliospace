@@ -6,10 +6,13 @@ block variables
 block content
     h2.text-center Dashboard
 
-    .row
-        .offset-sm-2.col-sm-8
-            .jumbotron.text-center.
-                Welcome to your dashboard page, #{user.profile.firstName}. What would you like to do today?
+  .row
+    .offset-sm-2.col-sm-8
+      .jumbotron.text-center.
+        Welcome to your dashboard page, #{user.profile.firstName}. What would you like to do today?
+  .row.offset-sm-2.col-sm-8
+    p If this is your first time visiting Foliospace, click on the Account tab to add your profile details.
+    P Then you can click on the Projects tab to add your projects. 
     // SOURCE: https://getbootstrap.com/docs/4.0/components/card/#using-grid-markup
     .container-fluid
         .row
@@ -37,6 +40,3 @@ block content
                         a.btn.btn-primary(href='/portfolio', method='get') Take Me There                         
 
     script(src='/javascript/project_form_handler.js')
-            
-
-

@@ -1,8 +1,7 @@
-// REFERENCE SOURCE: https://www.youtube.com/watch?v=6FOq4cUdH8k
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const createError = require("http-errors");
-const db = require('../database-mysql/db');
+// const db = require('../database-mysql/db');
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
@@ -15,7 +14,8 @@ const dashboardRouter = require("./routes/dashboard");
 const homeRouter = require("./routes/home");
 const usersRouter = require("./routes/users");
 
-const oktaConfig = require('./okta.config');
+const configObj = require('./config');
+const oktaConfig = configObj.okta;
 
 // App initialization
 const app = express();
