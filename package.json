@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/bin/www",
-    "test": "NODE_ENV=development node -r dotenv/config server/bin/www",
+    "test": "SET NODE_ENV=development && node -r dotenv/config server/bin/www",
     "depend": "npm install",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap"
   },
