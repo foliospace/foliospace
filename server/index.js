@@ -6,10 +6,6 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const session = require("express-session");
-const viewEngines = require('consolidate');
-
-// must specify options hash even if no options provided!
-//var phpExpress = require('php-express')({ binPath: 'php' });
 
 const auth = require("./auth");
 const middleware = require("./middleware");
@@ -26,10 +22,7 @@ const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-//app.engine('pug', viewEngines.pug);
 app.set('view engine', 'pug');
-//app.engine('php', phpExpress.engine);
-//app.set('view engine', 'php');
 
 // Middleware
 app.use(morgan("dev"));
@@ -49,9 +42,6 @@ app.use(session({
 
 app.use(auth.oidc.router);
 app.use(middleware.addUser);
-
-// routing all .php file to php-express
-//app.all(/.+\.php$/, phpExpress.router);
 
 // Routes
 app.use("/", homeRouter);
