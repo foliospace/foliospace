@@ -1,108 +1,59 @@
+block variables
+ - var selected = "Portfolio"
+
 doctype html
-head
-  // For Mobile --------
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  // - Stylesheet --------
-  link(rel='stylesheet', href='src/style.css')
-  link(rel='stylesheet', href='src/media-style.css')
-  link(rel='stylesheet', href='src/fonts/stylesheet.css')
-  // - Fonts --------
-  link(href='https://fonts.googleapis.com/css?family=Pacifico&display=swap', rel='stylesheet')
-  link(href='font-family: "Times New Roman", Times, serif;', rel='stylesheet', type='text/css')
-  link(href='https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700&display=swap', rel='stylesheet')
-  link(rel='manifest', href='%PUBLIC_URL%/manifest.json')
-  link(rel='shortcut icon', href='%PUBLIC_URL%/favicon.ico')
-  title Foliospace
-section#home
-  // NAVIGATION BAR ----------------
-  .nav-container
-    #nav-name
-    // ADDS NAME TO LEFT HAND SIDE
-    #nav-links
-      // LINKS ON RIGHT HAND SIDE
-      ul
-        li
-          a(href='#home') Home
-        li
-          a(href='#education') Education
-        // must match section id
-        li
-          a(href='#portfolio') Portfolio
-        li
-          a(href='#contact') Contact
-    // end of nav-links div
-  // end of nav-container div
-  // FRONT PAGE - HI IM ____ ------------
-  .container
-    h2  Hi, I&apos;m 
-    h1
-      br
-      a.button(href='#education') Thanks for stopping by.
-// ------ EDUCATION SECTION ---------------
-section#education
-  .container
-    hr
-    h5 Education
-    p
-      | &apos; . $row[&apos;degree&apos;] . &apos;
-      br
-      |  &apos; . $row[&apos;gradDate&apos;] .&apos;
-      br
-      | &apos;;
-      | &#x9;&#x9;&#x9;&#x9;&#x9;}
-      | &#x9;&#x9;&#x9;&#x9;?&gt;
-// ------ PORTFOLIO SECTION ---------------
-section#portfolio
-  .container  
-  hr
-  h5 Portfolio
-  // source for image layout: https://codepen.io/SitePoint/pen/bEvVqP
-  .images
-    a(href='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg')
-      figure
-        img(src='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg', alt='boat.jpg')
-        figcaption
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-    a(href='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg')
-      figure
-        img(src='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg', alt='boat2.jpg')
-        figcaption
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-    a(href='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg')
-      figure
-        img(src='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg', alt='boat3.jpg')
-        figcaption
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-    a(href='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg')
-      figure
-        img(src='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg', alt='boat4.jpg')
-        figcaption
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-// ------ CONTACT SECTION ---------------
-section#contact
-  .container
-    hr
-    h5 Contact
-    p
-      | &apos; . $row[&apos;linkedinURL&apos;] . &apos;
-      br
-      |  &apos; . $row[&apos;githubURL&apos;] .&apos;
-      br
-      | &apos;;
-      | &#x9;&#x9;&#x9;&#x9;&#x9;}
-      | &#x9;&#x9;&#x9;&#x9;&#x9;mysqli_close($db);
-      | &#x9;&#x9;&#x9;&#x9;&#x9;?&gt;
-// - JS stuff  -----------------
-script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-script(src='https://media-library.cloudinary.com/global/all.js')
-script.
-  var elements = document.getElementsByClassName("column");
-  // Declare a loop variable
-  var i;
-  // Two images side by side
-  function two() {
-  for (i = 0; i < elements.length; i++) {
-  elements[i].style.msFlex = "50%";  // IE10
-  elements[i].style.flex = "50%";
-  }
-  }
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css')
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    //- link(rel='stylesheet', href='src/style.css')
+    //- link(rel='stylesheet', href='src/media-style.css')
+    //- link(rel='stylesheet', href='src/fonts/stylesheet.css')
+    link(rel='shortcut icon', href='/favicon.png', type='image/x-icon') 
+    title Foliospace: #{title}
+  body
+    div.top-bar.d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.box-shadow
+      h5.my-0.mr-md-auto.font-weight-normal
+        a(href="#home", title="Expresso") Home
+
+      nav.my-2.my-md-0.mr-md-3
+        a.p-2.text-dark(href="#education") Education
+        a.p-2.text-dark(href="#portfolio") Portfolio
+        a.p-2.text-dark(href="#contact") Contact 
+    
+    section#home
+      .container
+        h1 Hi, I'm #{person.userName}
+        h2 Thanks for stopping by.
+    
+    section#education
+      .container
+      p Education
+      p= person.schoolName
+      p= person.degree
+      p= person.gradDate
+    
+    section#portfolio
+      .container
+      // source for image layout: https://codepen.io/SitePoint/pen/bEvVqP
+      .images
+        a(href='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg')
+          figure
+            img(src='https://res.cloudinary.com/foliospace/image/upload/v1559599367/testing/boat.jpg', alt='boat.jpg')
+            figcaption
+              | Caption Testing
+
+    section#contact
+      .container
+        table
+          td Contact Info
+          td
+            a(href=person.linkedinURL target="_blank") LinkedIn #{person.linkedinURL}
+          td
+            a(href=person.githubURL target="_blank") Github #{person.githubURL}
+    // - JS stuff  -----------------
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://media-library.cloudinary.com/global/all.js')

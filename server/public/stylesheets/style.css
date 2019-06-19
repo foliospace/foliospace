@@ -24,20 +24,27 @@ footer {
   margin-bottom: 2em;
 } */
 
+.button, {
+	display: block;
+	margin:auto;
+  text-align: center;
+}
+
+.card {
+  border: none;
+}
+
 .container {
   padding-top: 2em;
 }
 
 table {
+  overflow: hidden;
   width: 100%;
-  overflow: hidden
 }
 
 th, td {
   border: 1px solid black;
-}
-
-th, td {
   padding: 15px;
   text-align: left;
 }

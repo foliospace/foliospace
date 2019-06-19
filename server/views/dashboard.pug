@@ -4,41 +4,32 @@ block variables
     - var title = "Dashboard"
 
 block content
-    h2.text-center Dashboard
+    h2.text-center Welcome to your Dashboard, #{user.profile.firstName}. 
 
-    .row
-        .jumbotron.jumbotron-fluid.text-center
-            .container
-                h2.display-4 Welcome to your dashboard page, #{user.profile.firstName}. 
-                p.lead 
-                    | What would you like to do today?
-                p
-                    | If this is your first time visiting Foliospace, click the Account tab to add your profile details.
-                    | Then you can click on the Projects tab to add your projects. 
+    h4.text-center
+        .container
+            p.lead
+                | What would you like to do today?
     // SOURCE: https://getbootstrap.com/docs/4.0/components/card/#using-grid-markup
     .container-fluid
         .row
-            .col-sm-6
+            .col-sm-3(class="card text-center")
                 .card
                     .card-body
-                        h5.card-title Start a New Project 
                         form#newPrj(action='/projects', method='post')
-                            input.btn.btn-primary(type='submit', value='Take Me There')                        
-            .col-sm-6
+                            input.btn.btn-primary(type='submit', value='Start a New Project')         
+            .col-sm-3(class="card text-center")
                 .card
                     .card-body
-                        h5.card-title Edit an Existing Project
-                        a.btn.btn-primary(href='/projects', method='post') Take Me There    
-        .row    
-            .col-sm-6
+                        a.btn.btn-primary(href='/projects', method='post') Edit an Existing Project
+            .col-sm-3(class="card text-center")
                 .card
                     .card-body
-                        h5.card-title Update my Info
-                        a.btn.btn-primary(href='/account', method='get') Take Me There
-            .col-sm-6
+                        a.btn.btn-primary(href='/account', method='get') Update My Info
+            .col-sm-3(class="card text-center")
                 .card
                     .card-body
-                        h5.card-title View my Portfolio Page
-                        a.btn.btn-primary(href='https://andreadias.github.io/foliospace-demo/', method='get') Take Me There                         
-
+                        a.btn.btn-primary(href='https://andreadias.github.io/foliospace-demo/' target="_blank" method='get') View My Portfolio Page                 
+    p.text-center
+        | If this is your first time visiting Foliospace, add your info by clicking the Update My Info button above or Account tab in the top right.
     script(src='/javascript/project_form_handler.js')
