@@ -4,34 +4,35 @@ block variables
   - var title = "Projects"
 
 block content
-  h2.text-center My Projects
-	
+  h2.text-center
+
   body 
-    form#newPrj(action='/projects', method='post')
-        input.btn.btn-primary.btn-block(type='submit', value='Start New Project')  
-    p 
-    h1= 'All Projects'
-    p
-        table  
+    .row
+        .col-sm-6  
+            h1= 'My Projects'
+        .col-sm-6
+            form#newPrj(action='/projects', method='post', align="right")
+            input.btn.btn-primary.btn-md(type='submit', value='Start New Project')   
+    table  
+        tr
+            td= "Project ID"
+            td= "Project Name"
+            td= "View / Edit Project"
+            td= "Delete Project"
+        for project in projectList
             tr
-                td= "Project Id"
-                td= "Project Name"
-                td= "View / Edit Project"
-                td= "Delete Project"
-            for project in projectList
-                tr
-                    td= project.projectId
-                    td= project.projectName
-                    td
-                        //a(href='/projects/'+project.projectId) #{project.projectName}
-                        form#getPrj(action='/projects/'+project.projectId, method='get')
-                            .form-group
-                                input.edPrj.btn.btn-primary.btn-block(type='submit', value='View')
-                    td
-                        form#deletePrj.delPrj(formmethod='post')
-                            .form-group
-                                input#prjId(type="hidden", name="prjId", value=project.projectId)
-                                input.btn.btn-default.btn-block(type='submit', value='Delete') 
+                td= project.projectId
+                td= project.projectName
+                td
+                    //a(href='/projects/'+project.projectId) #{project.projectName}
+                    form#getPrj(action='/projects/'+project.projectId, method='get')
+                        .form-group
+                            input.edPrj.btn.btn-primary.btn-md(type='submit', value='Enter Project')
+                td
+                    form#deletePrj.delPrj(formmethod='post')
+                        .form-group
+                            input#prjId(type="hidden", name="prjId", value=project.projectId)
+                            input.btn.btn-primary.btn-md(type='submit', value='Delete') 
     script(src='/javascript/delete_project.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
 

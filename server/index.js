@@ -34,7 +34,13 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.use(session({
+// app.use(session({
+//   secret: oktaConfig.secret,
+//   resave: true,
+//   saveUninitialized: false
+// }));
+
+app.use(require('cookie-session')({
   secret: oktaConfig.secret,
   resave: true,
   saveUninitialized: false

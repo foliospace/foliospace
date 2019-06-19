@@ -17,7 +17,7 @@ block content
       td= "PortfolioURL"
       td= "LinkedIn"
       td= "Github"
-      td= "Delete Accounts"
+      td= "Delete Account"
     for person in personList
       tr
         td= person.id
@@ -31,4 +31,4 @@ block content
         td
           a(href=person.githubURL target="_blank") #{person.githubURL}
         td
-          a.p-2.text-dark(href='/admin/delete/'+person.id) Delete Account
+          a.btn.btn-primary.btn-md(href='/admin/delete/'+person.id) Delete Account
